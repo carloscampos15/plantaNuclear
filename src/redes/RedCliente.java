@@ -42,17 +42,48 @@ public class RedCliente{
     
     public void procesar() {
         try {
-            Scanner myObj = new Scanner(System.in);
-            while (true) {
-                System.out.println("CLIENT: sending data to server");
-                String mensaje = myObj.nextLine();
-                enviar(mensaje);
-
-                System.out.println("CLIENT: receiving data from server");
-                String output = recibir();
-
-                System.out.println("RESPONSE: " + output);
-            }
+            Scanner scn = new Scanner(System.in);
+            DataInputStream entrada = new DataInputStream(socket.getInputStream());
+            DataOutputStream salida = new DataOutputStream(socket.getOutputStream());
+            
+            //HILO DE ENVIO
+            Thread sendMessage = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        
+                        // read the message to deliver.
+                        String msg = scn.nextLine();
+                        
+                        try {
+                            // write on the output stream
+                            salida.writeUTF(msg);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            
+            //HILO DE LEER
+            Thread readMessage = new Thread(new Runnable() {
+                
+                @Override
+                public void run() {
+                    
+                    while (true) {
+                        try {
+                            // read the message sent to this client
+                            String msg = entrada.readUTF();
+                            System.out.println(msg);
+                        } catch (IOException e) {
+                            
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }); sendMessage.start();
+            readMessage.start();
         } catch (IOException ex) {
             Logger.getLogger(RedCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
