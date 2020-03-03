@@ -54,6 +54,13 @@ public class RedCliente {
         salida.flush();
         return true;
     }
+    
+    public boolean cargaReactor(String nombreUsuario, String reactor, String value) throws IOException {
+        String action = "name:"+nombreUsuario+",action:update,message:"+reactor+",value:"+value;
+        salida.writeUTF(action);
+        salida.flush();
+        return true;
+    }
 
     public Notificable getNotificable() {
         return notificable;

@@ -29,6 +29,11 @@ public class Home extends javax.swing.JFrame implements Notificable {
         switchReactor1.setOnOff(false);
         switchReactor2.setOnOff(false);
         switchReactor3.setOnOff(false);
+
+        jSlider1.setEnabled(false);
+        jSlider2.setEnabled(false);
+        jSlider3.setEnabled(false);
+
         this.cliente = cliente;
         jLabelName.setText(cliente.getNombre());
         this.cliente.setNotificableRed(this);
@@ -92,9 +97,18 @@ public class Home extends javax.swing.JFrame implements Notificable {
         jSlider1.setPaintLabels(true);
         jSlider1.setPaintTicks(true);
         jSlider1.setSnapToTicks(true);
+        jSlider1.setValue(0);
         jSlider1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jSlider1MouseDragged(evt);
+            }
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jSlider1MouseMoved(evt);
+            }
+        });
+        jSlider1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSlider1MouseReleased(evt);
             }
         });
         getContentPane().add(jSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 413, -1));
@@ -117,6 +131,12 @@ public class Home extends javax.swing.JFrame implements Notificable {
         jSlider2.setPaintLabels(true);
         jSlider2.setPaintTicks(true);
         jSlider2.setSnapToTicks(true);
+        jSlider2.setValue(0);
+        jSlider2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSlider2MouseReleased(evt);
+            }
+        });
         getContentPane().add(jSlider2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 413, -1));
 
         jLabel3.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
@@ -131,6 +151,12 @@ public class Home extends javax.swing.JFrame implements Notificable {
         jSlider3.setPaintLabels(true);
         jSlider3.setPaintTicks(true);
         jSlider3.setSnapToTicks(true);
+        jSlider3.setValue(0);
+        jSlider3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSlider3MouseReleased(evt);
+            }
+        });
         getContentPane().add(jSlider3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, 413, -1));
 
         switchReactor1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -235,14 +261,14 @@ public class Home extends javax.swing.JFrame implements Notificable {
 
     private void switchReactor1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchReactor1MouseClicked
         if (!switchReactor1.isOnOff()) {
-            jLabelEstado1.setText("APAGADO");
+            jSlider1.setEnabled(false);
             try {
                 cliente.switchReactor(cliente.getNombre(), "1", "APAGADO");
             } catch (IOException ex) {
                 System.out.println("error");
             }
         } else {
-            jLabelEstado1.setText("ENCENDIDO");
+            jSlider1.setEnabled(true);
             try {
                 cliente.switchReactor(cliente.getNombre(), "1", "ENCENDIDO");
             } catch (IOException ex) {
@@ -257,14 +283,14 @@ public class Home extends javax.swing.JFrame implements Notificable {
 
     private void switchReactor2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchReactor2MouseClicked
         if (!switchReactor2.isOnOff()) {
-            jLabelEstado2.setText("APAGADO");
+            jSlider2.setEnabled(false);
             try {
                 cliente.switchReactor(cliente.getNombre(), "2", "APAGADO");
             } catch (IOException ex) {
                 System.out.println("error");
             }
         } else {
-            jLabelEstado2.setText("ENCENDIDO");
+            jSlider2.setEnabled(true);
             try {
                 cliente.switchReactor(cliente.getNombre(), "2", "ENCENDIDO");
             } catch (IOException ex) {
@@ -279,14 +305,14 @@ public class Home extends javax.swing.JFrame implements Notificable {
 
     private void switchReactor3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchReactor3MouseClicked
         if (!switchReactor3.isOnOff()) {
-            jLabelEstado3.setText("APAGADO");
+            jSlider3.setEnabled(false);
             try {
                 cliente.switchReactor(cliente.getNombre(), "3", "APAGADO");
             } catch (IOException ex) {
                 System.out.println("error");
             }
         } else {
-            jLabelEstado3.setText("ENCENDIDO");
+            jSlider3.setEnabled(true);
             try {
                 cliente.switchReactor(cliente.getNombre(), "3", "ENCENDIDO");
             } catch (IOException ex) {
@@ -300,12 +326,40 @@ public class Home extends javax.swing.JFrame implements Notificable {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jSlider1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseDragged
-        System.out.println("me estas arrastrando");
+
     }//GEN-LAST:event_jSlider1MouseDragged
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void jSlider1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseMoved
+
+    }//GEN-LAST:event_jSlider1MouseMoved
+
+    private void jSlider1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseReleased
+        try {
+            cliente.cargaReactor(cliente.getNombre(), "1", Integer.toString(jSlider1.getValue()));
+        } catch (IOException ex) {
+            System.out.println("ERROR NO PUDE ACTUALIZAR LA CARGA DEL REACTOR");
+        }
+    }//GEN-LAST:event_jSlider1MouseReleased
+
+    private void jSlider2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider2MouseReleased
+        try {
+            cliente.cargaReactor(cliente.getNombre(), "2", Integer.toString(jSlider2.getValue()));
+        } catch (IOException ex) {
+            System.out.println("ERROR NO PUDE ACTUALIZAR LA CARGA DEL REACTOR");
+        }
+    }//GEN-LAST:event_jSlider2MouseReleased
+
+    private void jSlider3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider3MouseReleased
+        try {
+            cliente.cargaReactor(cliente.getNombre(), "3", Integer.toString(jSlider3.getValue()));
+        } catch (IOException ex) {
+            System.out.println("ERROR NO PUDE ACTUALIZAR LA CARGA DEL REACTOR");
+        }
+    }//GEN-LAST:event_jSlider3MouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -342,36 +396,80 @@ public class Home extends javax.swing.JFrame implements Notificable {
     public void switchReactor(String mensaje, String action, String nombreCliente, String reactor) {
         jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
 
-        if (!this.cliente.getNombre().equalsIgnoreCase(nombreCliente)) {
-            if (action.contains("ENCENDIDO")) {
-                if (reactor.equals("1")) {
-                    switchReactor1.setOnOff(true);
-                }
-                if (reactor.equals("2")) {
-                    switchReactor2.setOnOff(true);
-                }
-                if (reactor.equals("3")) {
-                    switchReactor3.setOnOff(true);
-                }
-            } else {
-                if (reactor.equals("1")) {
-                    switchReactor1.setOnOff(false);
-                }
-                if (reactor.equals("2")) {
-                    switchReactor2.setOnOff(false);
-                }
-                if (reactor.equals("3")) {
-                    switchReactor3.setOnOff(false);
-                }
+//        if (!this.cliente.getNombre().equalsIgnoreCase(nombreCliente)) {
+        if (action.contains("ENCENDIDO")) {
+            if (reactor.equals("1")) {
+                switchReactor1.setOnOff(true);
+                jSlider1.setEnabled(true);
+                jLabelEstado1.setText("ENCENDIDO");
             }
-            try {
-                this.invalidate();
-                this.validate();
-                this.repaint();
-            } catch (Exception e) {
-
+            if (reactor.equals("2")) {
+                switchReactor2.setOnOff(true);
+                jSlider2.setEnabled(true);
+                jLabelEstado1.setText("ENCENDIDO");
+            }
+            if (reactor.equals("3")) {
+                switchReactor3.setOnOff(true);
+                jSlider2.setEnabled(true);
+                jLabelEstado1.setText("ENCENDIDO");
+            }
+        } else {
+            if (reactor.equals("1")) {
+                switchReactor1.setOnOff(false);
+                jSlider1.setEnabled(false);
+            }
+            if (reactor.equals("2")) {
+                switchReactor2.setOnOff(false);
+                jSlider2.setEnabled(false);
+            }
+            if (reactor.equals("3")) {
+                switchReactor3.setOnOff(false);
+                jSlider3.setEnabled(false);
             }
         }
+        try {
+            this.invalidate();
+            this.validate();
+            this.repaint();
+        } catch (Exception e) {
+
+        }
+//        }
+    }
+
+    @Override
+    public void cargaReactor(String mensaje, String action, String nombreCliente, String reactor, String carga) {
+        jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
+
+//        if (!this.cliente.getNombre().equalsIgnoreCase(nombreCliente)) {
+        if (reactor.equals("1")) {
+            jSlider1.setValue(Integer.parseInt(carga));
+            if (action.contains("dañado")) {
+                jSlider1.setValue(Integer.parseInt(carga));
+                jSlider1.setEnabled(false);
+                switchReactor1.setOnOff(false);
+                jLabelEstado1.setText("DAÑADO");
+            }
+        }
+        if (reactor.equals("2")) {
+            jSlider2.setValue(Integer.parseInt(carga));
+            if (action.contains("dañado")) {
+                jSlider2.setValue(Integer.parseInt(carga));
+                jSlider2.setEnabled(false);
+                switchReactor2.setOnOff(false);
+                jLabelEstado1.setText("DAÑADO");
+            }
+        }
+        if (reactor.equals("3")) {
+            jSlider3.setValue(Integer.parseInt(carga));
+            if (action.contains("dañado")) {
+                jSlider3.setValue(Integer.parseInt(carga));
+                jSlider3.setEnabled(false);
+                switchReactor3.setOnOff(false);
+                jLabelEstado1.setText("DAÑADO");
+            }
+        }
+//        }
     }
 
     @Override

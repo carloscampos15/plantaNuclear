@@ -29,14 +29,20 @@ public class MensajeEntrada extends Thread {
         String[] codeKey = keys[1].split(":");
         String[] actionKey = keys[2].split(":");
         String[] valueKey = keys[3].split(":");
+        String[] reactorKey;
         
         switch(actionKey[1]){
             case "name":
                 this.notificable.login(nameKey[1] + ": " + valueKey[1]);
                 break;
             case "switch":
-                String[] reactorKey = keys[4].split(":");
+                reactorKey = keys[4].split(":");
                 this.notificable.switchReactor(nameKey[1] + ": " + valueKey[1], valueKey[1], nameKey[1], reactorKey[1]);
+                break;
+            case "update":
+                reactorKey = keys[4].split(":");
+                String[] cargaKey = keys[5].split(":");
+                this.notificable.cargaReactor(nameKey[1] + ": " + valueKey[1], valueKey[1], nameKey[1], reactorKey[1], cargaKey[1]);
                 break;
         }
         

@@ -38,6 +38,11 @@ public class Cliente{
         return true;
     }
     
+    public boolean cargaReactor(String nombreUsuario, String reactor, String value) throws IOException{
+        this.redCliente.cargaReactor(nombreUsuario, reactor, value);
+        return true;
+    }
+    
     public void ejecutarCliente(){
         this.redCliente.procesar();
     }

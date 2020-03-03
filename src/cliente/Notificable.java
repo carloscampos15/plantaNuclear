@@ -13,6 +13,8 @@ public interface Notificable {
     
     public void switchReactor(String mensaje, String action, String nombreCliente, String reactor);
     
+    public void cargaReactor(String mensaje, String action, String nombreCliente, String reactor, String carga);
+    
     public void login(String mensaje);
     
 }

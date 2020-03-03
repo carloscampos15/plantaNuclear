@@ -22,6 +22,9 @@ public class ReactorController {
     }
 
     public String recibirComando(String mensaje) {
+        
+        System.out.println("EL CUERPO DEL MENSAJE ES: " + mensaje);
+        
         String[] keys = mensaje.split(",");
 
         String[] nameKey = keys[0].split(":");
@@ -53,7 +56,7 @@ public class ReactorController {
     }
 
     public String updateCargaReactor(int carga, Reactor reactor) {
-        String mensaje = "code:500,action:update,value:No se puede realizar esta accion";
+        String mensaje = "code:500,action:update,value:No se puede realizar esta accion,reactor:"+reactor.getIdentificador()+",carga:0";
         if (carga < 0 || reactor.getEstado().equals("APAGADO") || reactor.getEstado().equals("DAÑADO")) {
             return mensaje;
         }
@@ -61,9 +64,9 @@ public class ReactorController {
         reactor.setCarga(carga);
         if (reactor.getCarga() >= 100) {
             reactor.setEstado("DAÑADO");
-            mensaje = "code:200,action:update,value:El reactor se ha dañado";
+            mensaje = "code:200,action:update,value:El reactor se ha dañado,reactor:"+reactor.getIdentificador()+",carga:0";
         } else {
-            mensaje = "code:200,action:update,value:La carga del reactor ha sido actualizada";
+            mensaje = "code:200,action:update,value:La carga del reactor ha sido actualizada,reactor:"+reactor.getIdentificador()+",carga:"+carga+"";
         }
 
         return mensaje;
