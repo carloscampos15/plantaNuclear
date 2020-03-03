@@ -410,7 +410,7 @@ public class Home extends javax.swing.JFrame implements Notificable {
             }
             if (reactor.equals("3")) {
                 switchReactor3.setOnOff(true);
-                jSlider2.setEnabled(true);
+                jSlider3.setEnabled(true);
                 jLabelEstado1.setText("ENCENDIDO");
             }
         } else {
