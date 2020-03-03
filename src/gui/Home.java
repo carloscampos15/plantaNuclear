@@ -5,24 +5,41 @@
  */
 package gui;
 
+import cliente.Cliente;
+import cliente.Notificable;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author ACER 53F4
  */
-public class Home extends javax.swing.JFrame{
-    
+public class Home extends javax.swing.JFrame implements Notificable {
+
+    private Cliente cliente;
+
     /**
      * Creates new form Home
      */
-    public Home() {
+    public Home(Cliente cliente) {
         initComponents();
         setLocationRelativeTo(null);
         switchReactor1.setOnOff(false);
         switchReactor2.setOnOff(false);
         switchReactor3.setOnOff(false);
+        this.cliente = cliente;
+        jLabelName.setText(cliente.getNombre());
+        this.cliente.setNotificableRed(this);
+        this.cliente.ejecutarCliente();
+        try {
+            cliente.updateName(cliente.getNombre());
+        } catch (IOException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,6 +49,7 @@ public class Home extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabelName = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -51,11 +69,22 @@ public class Home extends javax.swing.JFrame{
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaMensajes = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaMessage = new javax.swing.JTextArea();
+        jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelName.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
+        jLabelName.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelName.setText("USUARIO");
+        getContentPane().add(jLabelName, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 110, 40));
 
         jSlider1.setMajorTickSpacing(15);
         jSlider1.setMaximum(150);
@@ -68,19 +97,19 @@ public class Home extends javax.swing.JFrame{
                 jSlider1MouseDragged(evt);
             }
         });
-        getContentPane().add(jSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 413, -1));
+        getContentPane().add(jSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 413, -1));
 
         jLabel1.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reactorpequeño.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reactor.png"))); // NOI18N
         jLabel1.setText("Reactor 1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reactor2.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reactor.png"))); // NOI18N
         jLabel2.setText("Reactor 2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
 
         jSlider2.setMajorTickSpacing(15);
         jSlider2.setMaximum(150);
@@ -88,13 +117,13 @@ public class Home extends javax.swing.JFrame{
         jSlider2.setPaintLabels(true);
         jSlider2.setPaintTicks(true);
         jSlider2.setSnapToTicks(true);
-        getContentPane().add(jSlider2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 413, -1));
+        getContentPane().add(jSlider2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 413, -1));
 
         jLabel3.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reactor3.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reactor.png"))); // NOI18N
         jLabel3.setText("Reactor 3");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, -1, -1));
 
         jSlider3.setMajorTickSpacing(15);
         jSlider3.setMaximum(150);
@@ -102,19 +131,19 @@ public class Home extends javax.swing.JFrame{
         jSlider3.setPaintLabels(true);
         jSlider3.setPaintTicks(true);
         jSlider3.setSnapToTicks(true);
-        getContentPane().add(jSlider3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 410, 413, -1));
+        getContentPane().add(jSlider3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, 413, -1));
 
         switchReactor1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 switchReactor1MouseClicked(evt);
             }
         });
-        getContentPane().add(switchReactor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, 90, 50));
+        getContentPane().add(switchReactor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 90, 50));
 
         jLabelEstado1.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         jLabelEstado1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelEstado1.setText("APAGADO");
-        getContentPane().add(jLabelEstado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, -1, -1));
+        getContentPane().add(jLabelEstado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reparar.png"))); // NOI18N
         jButton1.setText("REPARAR");
@@ -123,7 +152,7 @@ public class Home extends javax.swing.JFrame{
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 110, 140, 44));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 140, 44));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reparar.png"))); // NOI18N
         jButton2.setText("REPARAR");
@@ -132,61 +161,93 @@ public class Home extends javax.swing.JFrame{
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 130, 40));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, 130, 40));
 
         switchReactor2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 switchReactor2MouseClicked(evt);
             }
         });
-        getContentPane().add(switchReactor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 90, 50));
+        getContentPane().add(switchReactor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 350, 90, 50));
 
         jLabelEstado2.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         jLabelEstado2.setForeground(new java.awt.Color(255, 255, 255));
         jLabelEstado2.setText("APAGADO");
-        getContentPane().add(jLabelEstado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, -1, -1));
+        getContentPane().add(jLabelEstado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, -1, -1));
 
         switchReactor3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 switchReactor3MouseClicked(evt);
             }
         });
-        getContentPane().add(switchReactor3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 490, 90, 50));
+        getContentPane().add(switchReactor3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, 90, 50));
 
         jLabelEstado3.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         jLabelEstado3.setForeground(new java.awt.Color(255, 255, 255));
         jLabelEstado3.setText("APAGADO");
-        getContentPane().add(jLabelEstado3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 510, -1, -1));
+        getContentPane().add(jLabelEstado3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 560, -1, -1));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reparar.png"))); // NOI18N
         jButton4.setText("REPARAR");
-        jButton4.setPreferredSize(new java.awt.Dimension(127, 43));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(596, 490, 130, 44));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 130, 44));
 
         btnSalir.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/nose.jpg"))); // NOI18N
         btnSalir.setText("Salir");
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 590, 190, 90));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 780, 10));
-        getContentPane().add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 182, 770, 10));
-        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 780, 10));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 640, 190, 90));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 780, 10));
+        getContentPane().add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 780, 10));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 780, 10));
+        getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 780, -1));
+
+        jTextAreaMensajes.setEditable(false);
+        jTextAreaMensajes.setColumns(20);
+        jTextAreaMensajes.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaMensajes);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 40, 370, 560));
+
+        jTextAreaMessage.setColumns(20);
+        jTextAreaMessage.setRows(5);
+        jTextAreaMessage.setToolTipText("hola mundo");
+        jScrollPane2.setViewportView(jTextAreaMessage);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 610, 370, 110));
+
+        jButton3.setText("ENVIAR");
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 730, 90, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondoplanta.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 700));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1210, 790));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void switchReactor1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchReactor1MouseClicked
-        if(!switchReactor1.isOnOff()){
+        if (!switchReactor1.isOnOff()) {
             jLabelEstado1.setText("APAGADO");
-        }else{
+            try {
+                cliente.switchReactor(cliente.getNombre(), "1", "APAGADO");
+            } catch (IOException ex) {
+                System.out.println("error");
+            }
+        } else {
             jLabelEstado1.setText("ENCENDIDO");
+            try {
+                cliente.switchReactor(cliente.getNombre(), "1", "ENCENDIDO");
+            } catch (IOException ex) {
+                System.out.println("error");
+            }
         }
     }//GEN-LAST:event_switchReactor1MouseClicked
 
@@ -195,10 +256,20 @@ public class Home extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void switchReactor2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchReactor2MouseClicked
-        if(!switchReactor2.isOnOff()){
+        if (!switchReactor2.isOnOff()) {
             jLabelEstado2.setText("APAGADO");
-        }else{
+            try {
+                cliente.switchReactor(cliente.getNombre(), "2", "APAGADO");
+            } catch (IOException ex) {
+                System.out.println("error");
+            }
+        } else {
             jLabelEstado2.setText("ENCENDIDO");
+            try {
+                cliente.switchReactor(cliente.getNombre(), "2", "ENCENDIDO");
+            } catch (IOException ex) {
+                System.out.println("error");
+            }
         }
     }//GEN-LAST:event_switchReactor2MouseClicked
 
@@ -207,10 +278,20 @@ public class Home extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void switchReactor3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchReactor3MouseClicked
-        if(!switchReactor3.isOnOff()){
+        if (!switchReactor3.isOnOff()) {
             jLabelEstado3.setText("APAGADO");
-        }else{
+            try {
+                cliente.switchReactor(cliente.getNombre(), "3", "APAGADO");
+            } catch (IOException ex) {
+                System.out.println("error");
+            }
+        } else {
             jLabelEstado3.setText("ENCENDIDO");
+            try {
+                cliente.switchReactor(cliente.getNombre(), "3", "ENCENDIDO");
+            } catch (IOException ex) {
+                System.out.println("error");
+            }
         }
     }//GEN-LAST:event_switchReactor3MouseClicked
 
@@ -222,45 +303,16 @@ public class Home extends javax.swing.JFrame{
         System.out.println("me estas arrastrando");
     }//GEN-LAST:event_jSlider1MouseDragged
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -269,15 +321,62 @@ public class Home extends javax.swing.JFrame{
     private javax.swing.JLabel jLabelEstado1;
     private javax.swing.JLabel jLabelEstado2;
     private javax.swing.JLabel jLabelEstado3;
+    private javax.swing.JLabel jLabelName;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
     private javax.swing.JSlider jSlider3;
+    private javax.swing.JTextArea jTextAreaMensajes;
+    private javax.swing.JTextArea jTextAreaMessage;
     private gui.Switch switchReactor1;
     private gui.Switch switchReactor2;
     private gui.Switch switchReactor3;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void switchReactor(String mensaje, String action, String nombreCliente, String reactor) {
+        jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
+
+        if (!this.cliente.getNombre().equalsIgnoreCase(nombreCliente)) {
+            if (action.contains("ENCENDIDO")) {
+                if (reactor.equals("1")) {
+                    switchReactor1.setOnOff(true);
+                }
+                if (reactor.equals("2")) {
+                    switchReactor2.setOnOff(true);
+                }
+                if (reactor.equals("3")) {
+                    switchReactor3.setOnOff(true);
+                }
+            } else {
+                if (reactor.equals("1")) {
+                    switchReactor1.setOnOff(false);
+                }
+                if (reactor.equals("2")) {
+                    switchReactor2.setOnOff(false);
+                }
+                if (reactor.equals("3")) {
+                    switchReactor3.setOnOff(false);
+                }
+            }
+            try {
+                this.invalidate();
+                this.validate();
+                this.repaint();
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    @Override
+    public void login(String mensaje) {
+        jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
+    }
 
 }

@@ -5,6 +5,11 @@
  */
 package gui;
 
+import cliente.Cliente;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ACER 53F4
@@ -32,13 +37,11 @@ public class Login extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldPuerto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jTextFieldName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 340, 32));
+        getContentPane().add(jTextFieldName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 400, 32));
 
         jButton1.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/inicio.png"))); // NOI18N
@@ -53,18 +56,12 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nombre de usuario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("BIENVENIDO");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Puerto de usuario");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
-        getContentPane().add(jTextFieldPuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 160, 32));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondoplanta.png"))); // NOI18N
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, -4, 460, 300));
@@ -74,12 +71,18 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String name = jTextFieldName.getText();
-        int puerto = Integer.parseInt(jTextFieldPuerto.getText());
-        if(name.isEmpty() || puerto == 0)
+        if (name.isEmpty()) {
             return;
-        Home home = new Home();
-        home.setVisible(true);
-        this.dispose();
+        }
+
+        try {
+            Cliente cliente = new Cliente(name);
+            Home home = new Home(cliente);
+            home.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            System.out.println("NO ES POSIBLE CREAR EL CLIENTE");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -120,10 +123,8 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextFieldName;
-    private javax.swing.JTextField jTextFieldPuerto;
     // End of variables declaration//GEN-END:variables
 }

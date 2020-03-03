@@ -5,6 +5,8 @@
  */
 package redes;
 
+import cliente.MensajeEntrada;
+import cliente.Notificable;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -17,75 +19,47 @@ import java.util.logging.Logger;
  *
  * @author carlo
  */
-public class RedCliente{
+public class RedCliente {
 
     private Socket socket;
     private int puerto;
     private String destino;
+    private DataInputStream entrada;
+    private DataOutputStream salida;
+    private Notificable notificable;
 
     public RedCliente(int puerto, String destino) throws IOException {
         this.puerto = puerto;
         this.destino = destino;
         this.socket = new Socket(this.destino, this.puerto);
+        entrada = new DataInputStream(socket.getInputStream());
+        salida = new DataOutputStream(socket.getOutputStream());
     }
 
-    public String recibir() throws IOException {
-        DataInputStream entrada = new DataInputStream(socket.getInputStream());
-        return entrada.readUTF();
+    public void procesar() {
+        MensajeEntrada readMessage = new MensajeEntrada(this.notificable, entrada);
+        readMessage.start();
     }
 
-    public void enviar(String mensaje) throws IOException {
-        DataOutputStream salida = new DataOutputStream(socket.getOutputStream());
-        salida.writeUTF(mensaje);
+    public boolean updateNameUser(String name) throws IOException{
+        String action = "name:"+name+",action:name,message:0,value:"+name;
+        salida.writeUTF(action);
         salida.flush();
+        return true;
     }
     
-    public void procesar() {
-        try {
-            Scanner scn = new Scanner(System.in);
-            DataInputStream entrada = new DataInputStream(socket.getInputStream());
-            DataOutputStream salida = new DataOutputStream(socket.getOutputStream());
-            
-            //HILO DE ENVIO
-            Thread sendMessage = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
-                        
-                        // read the message to deliver.
-                        String msg = scn.nextLine();
-                        
-                        try {
-                            // write on the output stream
-                            salida.writeUTF(msg);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-            
-            //HILO DE LEER
-            Thread readMessage = new Thread(new Runnable() {
-                
-                @Override
-                public void run() {
-                    
-                    while (true) {
-                        try {
-                            // read the message sent to this client
-                            String msg = entrada.readUTF();
-                            System.out.println(msg);
-                        } catch (IOException e) {
-                            
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }); sendMessage.start();
-            readMessage.start();
-        } catch (IOException ex) {
-            Logger.getLogger(RedCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public boolean switchReactor(String nombreUsuario, String reactor, String value) throws IOException {
+        String action = "name:"+nombreUsuario+",action:switch,message:"+reactor+",value:"+value;
+        salida.writeUTF(action);
+        salida.flush();
+        return true;
+    }
+
+    public Notificable getNotificable() {
+        return notificable;
+    }
+
+    public void setNotificable(Notificable notificable) {
+        this.notificable = notificable;
     }
 }

@@ -65,9 +65,10 @@ public class ClientHandler implements Runnable{
                 // receive the string 
                 received = entrada.readUTF();
                 String[] keys = received.split(",");
-                String[] actionKey = keys[0].split(":"); 
-                String[] messageKey = keys[1].split(":");
-                String[] valueKey = keys[2].split(":");
+                String[] nameKey = keys[0].split(":"); 
+                String[] actionKey = keys[1].split(":"); 
+                String[] messageKey = keys[2].split(":");
+                String[] valueKey = keys[3].split(":");
                 
                 if(actionKey[1].equals("name")){
                     this.name = valueKey[1];
@@ -80,11 +81,15 @@ public class ClientHandler implements Runnable{
                 }
 
                 String mensaje = controller.recibirComando(received);
+                
+                if(mensaje == null){
+                    mensaje = "code:200,action:name,value:EL USUARIO HA INIADO SESION";
+                }
 
                 // search for the recipient in the connected devices list. 
                 // ar is the vector storing client of active users 
                 for (ClientHandler mc : RedServidor.clientes) {
-                    mc.salida.writeUTF(mc.name + mensaje); 
+                    mc.salida.writeUTF("name:"+nameKey[1]+","+ mensaje); 
                 }
             } catch (IOException e) {
                 e.printStackTrace();

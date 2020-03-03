@@ -23,17 +23,26 @@ public class Cliente{
         this.puerto = 9090;
         redCliente = new RedCliente(this.puerto, "127.0.0.1");
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public boolean updateName(String name) throws IOException{
+        this.redCliente.updateNameUser(name);
+        return true;
+    }
+    
+    public boolean switchReactor(String nombreUsuario, String reactor, String value) throws IOException{
+        this.redCliente.switchReactor(nombreUsuario, reactor, value);
+        return true;
+    }
     
     public void ejecutarCliente(){
         this.redCliente.procesar();
     }
     
-    public static void main(String[] args) {
-        try {
-            Cliente c = new Cliente("carlos");
-            c.ejecutarCliente();
-        } catch (IOException ex) {
-            System.out.println("El cliente no pudo inciar sus servicios");
-        }
+    public void setNotificableRed(Notificable notificable){
+        this.redCliente.setNotificable(notificable);
     }
 }
