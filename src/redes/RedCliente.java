@@ -17,7 +17,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author carlo
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
 public class RedCliente {
 
@@ -36,27 +37,52 @@ public class RedCliente {
         salida = new DataOutputStream(socket.getOutputStream());
     }
 
+    /**
+     *
+     */
     public void procesar() {
         MensajeEntrada readMessage = new MensajeEntrada(this.notificable, entrada);
         readMessage.start();
     }
 
-    public boolean updateNameUser(String name) throws IOException{
-        String action = "name:"+name+",action:name,message:0,value:"+name;
+    /**
+     *
+     * @param name
+     * @return
+     * @throws IOException
+     */
+    public boolean updateNameUser(String name) throws IOException {
+        String action = "name:" + name + ",action:name,message:0,value:" + name;
         salida.writeUTF(action);
         salida.flush();
         return true;
     }
-    
+
+    /**
+     *
+     * @param nombreUsuario
+     * @param reactor
+     * @param value
+     * @return
+     * @throws IOException
+     */
     public boolean switchReactor(String nombreUsuario, String reactor, String value) throws IOException {
-        String action = "name:"+nombreUsuario+",action:switch,message:"+reactor+",value:"+value;
+        String action = "name:" + nombreUsuario + ",action:switch,message:" + reactor + ",value:" + value;
         salida.writeUTF(action);
         salida.flush();
         return true;
     }
-    
+
+    /**
+     *
+     * @param nombreUsuario
+     * @param reactor
+     * @param value
+     * @return
+     * @throws IOException
+     */
     public boolean cargaReactor(String nombreUsuario, String reactor, String value) throws IOException {
-        String action = "name:"+nombreUsuario+",action:update,message:"+reactor+",value:"+value;
+        String action = "name:" + nombreUsuario + ",action:update,message:" + reactor + ",value:" + value;
         salida.writeUTF(action);
         salida.flush();
         return true;

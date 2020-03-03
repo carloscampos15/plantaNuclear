@@ -11,8 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author ACER 53F4
+ * Es donde el cliente se identifica con su respectivo nombre
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
 public class Login extends javax.swing.JFrame {
 

@@ -18,9 +18,11 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author carlo
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
 public class RedServidor {
+
     private ReactorController controller;
     private ServerSocket listenSocket;
     private int port;
@@ -33,18 +35,34 @@ public class RedServidor {
     public void setController(ReactorController controller) {
         this.controller = controller;
     }
-    
+
+    /**
+     *
+     * @throws IOException
+     */
     public void activar() throws IOException {
         System.out.println("<< SERVER: binding port");
         this.listenSocket = new ServerSocket(port);
         this.run();
     }
 
+    /**
+     *
+     * @param clientSocket
+     * @return
+     * @throws IOException
+     */
     public String recibir(Socket clientSocket) throws IOException {
         DataInputStream entrada = new DataInputStream(clientSocket.getInputStream());
         return entrada.readUTF();
     }
 
+    /**
+     *
+     * @param clientSocket
+     * @param mensaje
+     * @throws IOException
+     */
     public void enviar(Socket clientSocket, String mensaje) throws IOException {
         DataOutputStream salida = new DataOutputStream(clientSocket.getOutputStream());
         salida.writeUTF(mensaje);
@@ -61,15 +79,15 @@ public class RedServidor {
                 Socket clientSocket = listenSocket.accept();
 
                 System.out.println("SERVER: Cliente recibido");
-                
+
                 DataInputStream entrada = new DataInputStream(clientSocket.getInputStream());
                 DataOutputStream salida = new DataOutputStream(clientSocket.getOutputStream());
-                
+
                 System.out.println("SERVER: Creando nuevo controlador para este cliente");
-                
+
                 ClientHandler clientHandler = new ClientHandler(clientSocket, "NAME", entrada, salida, controller);
                 this.setController(clientHandler.getController());
-                
+
                 Thread t = new Thread(clientHandler);
                 clientes.add(clientHandler);
                 t.start();

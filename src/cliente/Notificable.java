@@ -6,8 +6,9 @@
 package cliente;
 
 /**
- *
- * @author ACER 53F4
+ * Interfaz que conecta la interzas con el cliente
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
 public interface Notificable {
     

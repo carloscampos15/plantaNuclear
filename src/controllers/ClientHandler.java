@@ -14,16 +14,26 @@ import redes.RedServidor;
 
 /**
  *
- * @author ACER 53F4
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
-public class ClientHandler implements Runnable{
+public class ClientHandler implements Runnable {
+
     private String name;
     private final DataInputStream entrada;
     private final DataOutputStream salida;
     private Socket clientSocket;
     private boolean isloggedin;
     private ReactorController controller;
-    
+
+    /**
+     *
+     * @param clientSocket
+     * @param name
+     * @param entrada
+     * @param salida
+     * @param controller
+     */
     public ClientHandler(Socket clientSocket, String name, DataInputStream entrada, DataOutputStream salida, ReactorController controller) {
         this.entrada = entrada;
         this.salida = salida;
@@ -56,8 +66,8 @@ public class ClientHandler implements Runnable{
     public void setIsloggedin(boolean isloggedin) {
         this.isloggedin = isloggedin;
     }
-    
-     @Override
+
+    @Override
     public void run() {
         String received;
         while (true) {
@@ -65,12 +75,12 @@ public class ClientHandler implements Runnable{
                 // receive the string 
                 received = entrada.readUTF();
                 String[] keys = received.split(",");
-                String[] nameKey = keys[0].split(":"); 
-                String[] actionKey = keys[1].split(":"); 
+                String[] nameKey = keys[0].split(":");
+                String[] actionKey = keys[1].split(":");
                 String[] messageKey = keys[2].split(":");
                 String[] valueKey = keys[3].split(":");
-                
-                if(actionKey[1].equals("name")){
+
+                if (actionKey[1].equals("name")) {
                     this.name = valueKey[1];
                 }
 
@@ -81,15 +91,15 @@ public class ClientHandler implements Runnable{
                 }
 
                 String mensaje = controller.recibirComando(received);
-                
-                if(mensaje == null){
+
+                if (mensaje == null) {
                     mensaje = "code:200,action:name,value:EL USUARIO HA INIADO SESION";
                 }
 
                 // search for the recipient in the connected devices list. 
                 // ar is the vector storing client of active users 
                 for (ClientHandler mc : RedServidor.clientes) {
-                    mc.salida.writeUTF("name:"+nameKey[1]+","+ mensaje); 
+                    mc.salida.writeUTF("name:" + nameKey[1] + "," + mensaje);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

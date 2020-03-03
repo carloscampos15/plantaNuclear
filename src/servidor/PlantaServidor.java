@@ -11,20 +11,23 @@ import models.Reactor;
 import redes.RedServidor;
 
 /**
- *
- * @author carlo
+ *Se encarga de todo lo necesario para encerder el servidor
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
 public class PlantaServidor {
     private RedServidor redServidor;
     private Reactor[] reactores;
     private ReactorController controller;
-    
+  
     public PlantaServidor(RedServidor redServidor, Reactor[] reactores){
         this.redServidor = redServidor;
         this.controller = new ReactorController(reactores);
         this.redServidor.setController(this.controller);
     }
-    
+ /**
+  * Se encarga de iniciar el servidor para que se conecte con el cliente
+  */   
     public void ejecutarServidor(){
         try {
             this.redServidor.activar();

@@ -12,9 +12,12 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
 /**
+ * Enciende o apaga un reactor
  * @see https://www.jc-mouse.net/
- * @author mouse
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
+
 public class Switch extends JComponent implements MouseListener{
 
     /**

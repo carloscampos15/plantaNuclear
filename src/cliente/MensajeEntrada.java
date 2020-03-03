@@ -9,19 +9,24 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 /**
- *
- * @author ACER 53F4
+ * Es el hilo encargado de estar siempre pendiente de recibir un mensaje
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
 public class MensajeEntrada extends Thread {
     
     private Notificable notificable;
     private DataInputStream entrada;
-    
+
     public MensajeEntrada(Notificable notificable, DataInputStream entrada){
         this.notificable = notificable;
         this.entrada = entrada;
     }    
-    
+/**
+ * Segun el mensaje recibido le informa a la interfaz notificable para que este realice el procedimeinto correspondiente
+ * @param mensaje
+ * @return 
+ */
     public String procesarMensaje(String mensaje){
         String[] keys = mensaje.split(",");
         

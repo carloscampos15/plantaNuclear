@@ -9,8 +9,9 @@ import java.io.IOException;
 import redes.RedCliente;
 
 /**
- *
- * @author carlo
+ * Se encarga de tener todos los metodos necesarios para generar un nuevo cliente y poder editarlo llamando estos metodos
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
 public class Cliente{
 
@@ -21,7 +22,7 @@ public class Cliente{
     public Cliente(String nombre) throws IOException {      
         this.nombre = nombre;
         this.puerto = 9090;
-        redCliente = new RedCliente(this.puerto, "127.0.0.1");
+        redCliente = new RedCliente(this.puerto, "192.168.1.66");
     }
 
     public String getNombre() {

@@ -13,8 +13,9 @@ import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 /**
- *
- * @author ACER 53F4
+ * Es la vita donde se encuentran todos los reactores de la planta nuclear y se le puede hacer los cambios necesarios
+ * @author Karen Castaño Orjuela Castaño
+ * @author Carlos Alberto Campos Armero
  */
 public class Home extends javax.swing.JFrame implements Notificable {
 
@@ -406,12 +407,12 @@ public class Home extends javax.swing.JFrame implements Notificable {
             if (reactor.equals("2")) {
                 switchReactor2.setOnOff(true);
                 jSlider2.setEnabled(true);
-                jLabelEstado1.setText("ENCENDIDO");
+                jLabelEstado2.setText("ENCENDIDO");
             }
             if (reactor.equals("3")) {
                 switchReactor3.setOnOff(true);
-                jSlider2.setEnabled(true);
-                jLabelEstado1.setText("ENCENDIDO");
+                jSlider3.setEnabled(true);
+                jLabelEstado3.setText("ENCENDIDO");
             }
         } else {
             if (reactor.equals("1")) {
@@ -457,7 +458,7 @@ public class Home extends javax.swing.JFrame implements Notificable {
                 jSlider2.setValue(Integer.parseInt(carga));
                 jSlider2.setEnabled(false);
                 switchReactor2.setOnOff(false);
-                jLabelEstado1.setText("DAÑADO");
+                jLabelEstado2.setText("DAÑADO");
             }
         }
         if (reactor.equals("3")) {
@@ -466,7 +467,7 @@ public class Home extends javax.swing.JFrame implements Notificable {
                 jSlider3.setValue(Integer.parseInt(carga));
                 jSlider3.setEnabled(false);
                 switchReactor3.setOnOff(false);
-                jLabelEstado1.setText("DAÑADO");
+                jLabelEstado3.setText("DAÑADO");
             }
         }
 //        }

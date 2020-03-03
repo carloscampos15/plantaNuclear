@@ -20,7 +20,11 @@ public class ReactorController {
     public ReactorController(Reactor[] reactores) {
         this.reactores = reactores;
     }
-
+/**
+ * recibe un mensaje desde el cliente el cual es traducido para que realice una accion
+ * @param mensaje
+ * @return 
+ */
     public String recibirComando(String mensaje) {
         
         System.out.println("EL CUERPO DEL MENSAJE ES: " + mensaje);
@@ -43,7 +47,12 @@ public class ReactorController {
 
         return null;
     }
-
+/**
+ * Encender o apagar un reactor
+ * @param estado
+ * @param reactor
+ * @return 
+ */
     public String switchReactor(String estado, Reactor reactor) {
         String mensaje = "";
         if (reactor.getEstado().equals("DAÑADO") || reactor.getEstado().equals(estado)) {
@@ -54,7 +63,12 @@ public class ReactorController {
         }
         return mensaje;
     }
-
+/**
+ * actualiza la carga del reactor
+ * @param carga
+ * @param reactor
+ * @return 
+ */
     public String updateCargaReactor(int carga, Reactor reactor) {
         String mensaje = "code:500,action:update,value:No se puede realizar esta accion,reactor:"+reactor.getIdentificador()+",carga:0";
         if (carga < 0 || reactor.getEstado().equals("APAGADO") || reactor.getEstado().equals("DAÑADO")) {
@@ -71,7 +85,11 @@ public class ReactorController {
 
         return mensaje;
     }
-
+/**
+ * Repara la carga del reactor
+ * @param reactor
+ * @return 
+ */
     public String repairReactor(Reactor reactor) {
         String mensaje = "code:500,action:repair,value:No se puede realizar esta accion";
         if (reactor.getEstado().equals("DAÑADO")) {
