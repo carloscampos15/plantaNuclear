@@ -414,18 +414,37 @@ public class Home extends javax.swing.JFrame implements Notificable {
                 jSlider3.setEnabled(true);
                 jLabelEstado3.setText("ENCENDIDO");
             }
-        } else {
+        } else if(action.contains("DAÑADO")){
             if (reactor.equals("1")) {
                 switchReactor1.setOnOff(false);
                 jSlider1.setEnabled(false);
+                jLabelEstado1.setText("DAÑADO");
             }
             if (reactor.equals("2")) {
                 switchReactor2.setOnOff(false);
                 jSlider2.setEnabled(false);
+                jLabelEstado2.setText("DAÑADO");
             }
             if (reactor.equals("3")) {
                 switchReactor3.setOnOff(false);
                 jSlider3.setEnabled(false);
+                jLabelEstado3.setText("DAÑADO");
+            }
+        }else if(action.contains("APAGADO")){
+            if (reactor.equals("1")) {
+                switchReactor1.setOnOff(false);
+                jSlider1.setEnabled(false);
+                jLabelEstado1.setText("APAGADO");
+            }
+            if (reactor.equals("2")) {
+                switchReactor2.setOnOff(false);
+                jSlider2.setEnabled(false);
+                jLabelEstado2.setText("APAGADO");
+            }
+            if (reactor.equals("3")) {
+                switchReactor3.setOnOff(false);
+                jSlider3.setEnabled(false);
+                jLabelEstado3.setText("APAGADO");
             }
         }
         try {
@@ -469,6 +488,13 @@ public class Home extends javax.swing.JFrame implements Notificable {
                 switchReactor3.setOnOff(false);
                 jLabelEstado3.setText("DAÑADO");
             }
+        }
+        try {
+            this.invalidate();
+            this.validate();
+            this.repaint();
+        } catch (Exception e) {
+
         }
 //        }
     }

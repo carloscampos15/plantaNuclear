@@ -56,7 +56,7 @@ public class ReactorController {
     public String switchReactor(String estado, Reactor reactor) {
         String mensaje = "";
         if (reactor.getEstado().equals("DAÑADO") || reactor.getEstado().equals(estado)) {
-            mensaje += "code:500,action:switch,value:No se puede realizar esta accion,reactor:"+reactor.getIdentificador();
+            mensaje += "code:500,action:switch,value:No se puede realizar esta accion; el reactor esta "+reactor.getEstado()+" ,reactor:"+reactor.getIdentificador();
         } else if (!estado.equals(reactor.getEstado())) {
             reactor.setEstado(estado);
             mensaje += "code:200,action:switch,value:El reactor " + reactor.getIdentificador() + " ha cambiado su estado a " + estado + ",reactor:"+reactor.getIdentificador();
