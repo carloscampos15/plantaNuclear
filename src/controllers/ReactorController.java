@@ -20,15 +20,18 @@ public class ReactorController {
     public ReactorController(Reactor[] reactores) {
         this.reactores = reactores;
     }
-/**
- * recibe un mensaje desde el cliente el cual es traducido para que realice una accion
- * @param mensaje
- * @return 
- */
+
+    /**
+     * recibe un mensaje desde el cliente el cual es traducido para que realice
+     * una accion
+     *
+     * @param mensaje
+     * @return
+     */
     public String recibirComando(String mensaje) {
-        
+
         System.out.println("EL CUERPO DEL MENSAJE ES: " + mensaje);
-        
+
         String[] keys = mensaje.split(",");
 
         String[] nameKey = keys[0].split(":");
@@ -43,34 +46,40 @@ public class ReactorController {
                 return updateCargaReactor(Integer.parseInt(valueKey[1]), getReactor(Integer.parseInt(messageKey[1])));
             case "repair":
                 return repairReactor(getReactor(Integer.parseInt(messageKey[1])));
+            case "message":
+                return sendMessage(valueKey[1]);
         }
 
         return null;
     }
-/**
- * Encender o apagar un reactor
- * @param estado
- * @param reactor
- * @return 
- */
+
+    /**
+     * Encender o apagar un reactor
+     *
+     * @param estado
+     * @param reactor
+     * @return
+     */
     public String switchReactor(String estado, Reactor reactor) {
         String mensaje = "";
         if (reactor.getEstado().equals("DAÑADO") || reactor.getEstado().equals(estado)) {
-            mensaje += "code:500,action:switch,value:No se puede realizar esta accion; el reactor esta "+reactor.getEstado()+" ,reactor:"+reactor.getIdentificador();
+            mensaje += "code:500,action:switch,value:No se puede realizar esta accion; el reactor esta " + reactor.getEstado() + " ,reactor:" + reactor.getIdentificador();
         } else if (!estado.equals(reactor.getEstado())) {
             reactor.setEstado(estado);
-            mensaje += "code:200,action:switch,value:El reactor " + reactor.getIdentificador() + " ha cambiado su estado a " + estado + ",reactor:"+reactor.getIdentificador();
+            mensaje += "code:200,action:switch,value:El reactor " + reactor.getIdentificador() + " ha cambiado su estado a " + estado + ",reactor:" + reactor.getIdentificador();
         }
         return mensaje;
     }
-/**
- * actualiza la carga del reactor
- * @param carga
- * @param reactor
- * @return 
- */
+
+    /**
+     * actualiza la carga del reactor
+     *
+     * @param carga
+     * @param reactor
+     * @return
+     */
     public String updateCargaReactor(int carga, Reactor reactor) {
-        String mensaje = "code:500,action:update,value:No se puede realizar esta accion,reactor:"+reactor.getIdentificador()+",carga:0";
+        String mensaje = "code:500,action:update,value:No se puede realizar esta accion,reactor:" + reactor.getIdentificador() + ",carga:0";
         if (carga < 0 || reactor.getEstado().equals("APAGADO") || reactor.getEstado().equals("DAÑADO")) {
             return mensaje;
         }
@@ -78,26 +87,33 @@ public class ReactorController {
         reactor.setCarga(carga);
         if (reactor.getCarga() >= 100) {
             reactor.setEstado("DAÑADO");
-            mensaje = "code:200,action:update,value:El reactor se ha dañado,reactor:"+reactor.getIdentificador()+",carga:0";
+            mensaje = "code:200,action:update,value:El reactor se ha dañado,reactor:" + reactor.getIdentificador() + ",carga:0";
         } else {
-            mensaje = "code:200,action:update,value:La carga del reactor ha sido actualizada,reactor:"+reactor.getIdentificador()+",carga:"+carga+"";
+            mensaje = "code:200,action:update,value:La carga del reactor ha sido actualizada,reactor:" + reactor.getIdentificador() + ",carga:" + carga + "";
         }
 
         return mensaje;
     }
-/**
- * Repara la carga del reactor
- * @param reactor
- * @return 
- */
+
+    /**
+     * Repara la carga del reactor
+     *
+     * @param reactor
+     * @return
+     */
     public String repairReactor(Reactor reactor) {
-        String mensaje = "code:500,action:repair,value:No se puede realizar esta accion";
+        String mensaje = "code:500,action:repair,value:No se puede realizar esta accion,reactor:"+reactor.getIdentificador();
         if (reactor.getEstado().equals("DAÑADO")) {
             reactor.setEstado("APAGADO");
             reactor.setCarga(0);
-            mensaje = "code:200,action:repair,value:El reactor ha sido reparado";
+            mensaje = "code:200,action:repair,value:El reactor ha sido reparado,reactor:"+reactor.getIdentificador();
         }
         return mensaje;
+    }
+    
+    public String sendMessage(String mensaje){
+        String mensajeTemp = "code:200,action:message,value:"+mensaje;
+        return mensajeTemp;
     }
 
     public Reactor getReactor(int identificador) {

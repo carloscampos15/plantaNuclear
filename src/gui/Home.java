@@ -10,10 +10,11 @@ import cliente.Notificable;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 
 /**
- * Es la vita donde se encuentran todos los reactores de la planta nuclear y se le puede hacer los cambios necesarios
+ * Es la vita donde se encuentran todos los reactores de la planta nuclear y se
+ * le puede hacer los cambios necesarios
+ *
  * @author Karen Castaño Orjuela Castaño
  * @author Carlos Alberto Campos Armero
  */
@@ -252,6 +253,11 @@ public class Home extends javax.swing.JFrame implements Notificable {
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 610, 370, 110));
 
         jButton3.setText("ENVIAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 730, 90, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondoplanta.png"))); // NOI18N
@@ -279,7 +285,11 @@ public class Home extends javax.swing.JFrame implements Notificable {
     }//GEN-LAST:event_switchReactor1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            this.cliente.repairReactor(this.cliente.getNombre(), "1");
+        } catch (IOException ex) {
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void switchReactor2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchReactor2MouseClicked
@@ -301,7 +311,11 @@ public class Home extends javax.swing.JFrame implements Notificable {
     }//GEN-LAST:event_switchReactor2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try {
+            this.cliente.repairReactor(this.cliente.getNombre(), "2");
+        } catch (IOException ex) {
+
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void switchReactor3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchReactor3MouseClicked
@@ -323,7 +337,11 @@ public class Home extends javax.swing.JFrame implements Notificable {
     }//GEN-LAST:event_switchReactor3MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        try {
+            this.cliente.repairReactor(this.cliente.getNombre(), "3");
+        } catch (IOException ex) {
+
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jSlider1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseDragged
@@ -362,6 +380,15 @@ public class Home extends javax.swing.JFrame implements Notificable {
         }
     }//GEN-LAST:event_jSlider3MouseReleased
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            String mensaje = jTextAreaMessage.getText();
+            cliente.sendMessage(cliente.getNombre(), mensaje);
+        } catch (IOException ex) {
+
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
@@ -397,7 +424,6 @@ public class Home extends javax.swing.JFrame implements Notificable {
     public void switchReactor(String mensaje, String action, String nombreCliente, String reactor) {
         jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
 
-//        if (!this.cliente.getNombre().equalsIgnoreCase(nombreCliente)) {
         if (action.contains("ENCENDIDO")) {
             if (reactor.equals("1")) {
                 switchReactor1.setOnOff(true);
@@ -414,7 +440,7 @@ public class Home extends javax.swing.JFrame implements Notificable {
                 jSlider3.setEnabled(true);
                 jLabelEstado3.setText("ENCENDIDO");
             }
-        } else if(action.contains("DAÑADO")){
+        } else if (action.contains("DAÑADO")) {
             if (reactor.equals("1")) {
                 switchReactor1.setOnOff(false);
                 jSlider1.setEnabled(false);
@@ -430,7 +456,7 @@ public class Home extends javax.swing.JFrame implements Notificable {
                 jSlider3.setEnabled(false);
                 jLabelEstado3.setText("DAÑADO");
             }
-        }else if(action.contains("APAGADO")){
+        } else if (action.contains("APAGADO")) {
             if (reactor.equals("1")) {
                 switchReactor1.setOnOff(false);
                 jSlider1.setEnabled(false);
@@ -454,14 +480,12 @@ public class Home extends javax.swing.JFrame implements Notificable {
         } catch (Exception e) {
 
         }
-//        }
     }
 
     @Override
     public void cargaReactor(String mensaje, String action, String nombreCliente, String reactor, String carga) {
         jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
 
-//        if (!this.cliente.getNombre().equalsIgnoreCase(nombreCliente)) {
         if (reactor.equals("1")) {
             jSlider1.setValue(Integer.parseInt(carga));
             if (action.contains("dañado")) {
@@ -496,12 +520,32 @@ public class Home extends javax.swing.JFrame implements Notificable {
         } catch (Exception e) {
 
         }
-//        }
+    }
+
+    @Override
+    public void repairReactor(String mensaje, String action, String nombreCliente, String reactor) {
+        jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
+
+        if (action.contains("reparado")) {
+            if (reactor.equals("1")) {
+                jLabelEstado1.setText("APAGADO");
+            }
+            if (reactor.equals("2")) {
+                jLabelEstado2.setText("APAGADO");
+            }
+            if (reactor.equals("3")) {
+                jLabelEstado3.setText("APAGADO");
+            }
+        }
+    }
+
+    @Override
+    public void sendMessage(String mensaje) {
+        jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
     }
 
     @Override
     public void login(String mensaje) {
         jTextAreaMensajes.setText(jTextAreaMensajes.getText() + "\n" + mensaje);
     }
-
 }

@@ -22,7 +22,7 @@ public class Cliente{
     public Cliente(String nombre) throws IOException {      
         this.nombre = nombre;
         this.puerto = 9090;
-        redCliente = new RedCliente(this.puerto, "192.168.1.66");
+        redCliente = new RedCliente(this.puerto, "127.0.0.1");
     }
 
     public String getNombre() {
@@ -41,6 +41,16 @@ public class Cliente{
     
     public boolean cargaReactor(String nombreUsuario, String reactor, String value) throws IOException{
         this.redCliente.cargaReactor(nombreUsuario, reactor, value);
+        return true;
+    }
+    
+    public boolean repairReactor(String nombreUsuario, String reactor) throws IOException{
+        this.redCliente.repairReactor(nombreUsuario, reactor);
+        return true;
+    }
+    
+    public boolean sendMessage(String nombreUsuario, String mensaje) throws IOException{
+        this.redCliente.sendMessage(nombreUsuario, mensaje);
         return true;
     }
     

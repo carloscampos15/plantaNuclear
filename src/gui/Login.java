@@ -7,8 +7,6 @@ package gui;
 
 import cliente.Cliente;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Es donde el cliente se identifica con su respectivo nombre

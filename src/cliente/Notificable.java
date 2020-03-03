@@ -16,6 +16,10 @@ public interface Notificable {
     
     public void cargaReactor(String mensaje, String action, String nombreCliente, String reactor, String carga);
     
+    public void repairReactor(String mensaje, String action, String nombreCliente, String reactor);
+    
+    public void sendMessage(String mensaje);
+    
     public void login(String mensaje);
     
 }

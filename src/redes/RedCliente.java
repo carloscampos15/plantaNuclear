@@ -88,6 +88,20 @@ public class RedCliente {
         return true;
     }
 
+    public boolean repairReactor(String nombreUsuario, String reactor) throws IOException {
+        String action = "name:" + nombreUsuario + ",action:repair,message:" + reactor + ",value:" + 0;
+        salida.writeUTF(action);
+        salida.flush();
+        return true;
+    }
+
+    public boolean sendMessage(String nombreUsuario, String mensaje) throws IOException {
+        String action = "name:" + nombreUsuario + ",action:message,message:0,value:"+mensaje;
+        salida.writeUTF(action);
+        salida.flush();
+        return true;
+    }
+
     public Notificable getNotificable() {
         return notificable;
     }

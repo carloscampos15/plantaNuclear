@@ -49,6 +49,13 @@ public class MensajeEntrada extends Thread {
                 String[] cargaKey = keys[5].split(":");
                 this.notificable.cargaReactor(nameKey[1] + ": " + valueKey[1], valueKey[1], nameKey[1], reactorKey[1], cargaKey[1]);
                 break;
+            case "repair":
+                reactorKey = keys[4].split(":");
+                this.notificable.repairReactor(nameKey[1] + ": " + valueKey[1], valueKey[1], nameKey[1], reactorKey[1]);
+                break;
+            case "message":
+                this.notificable.sendMessage(nameKey[1] + ": " + valueKey[1]);
+                break;
         }
         
         
